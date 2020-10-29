@@ -41,7 +41,7 @@ dir_output = dir_input + 'OSeaIce_Paper/'
 dir_mask = '/nobackup/rossby24/proj/rossby/joint_exp/oseaice/surface_restoring/'
 
 # Parameters
-save_fig = False
+save_fig = True
 month = 3
 month2 = 9
 
@@ -331,6 +331,7 @@ cbar.set_label('SIC PERT - CTRL ($\%$)',fontsize=28)
 # Save figure
 if save_fig == True:
     fig.savefig(dir_output+'fig7.png')
+    fig.savefig(dir_output+'fig7.eps',dpi=300)
 
 
 # Supp. Fig. 7b (SST+1K) - Maps of difference in March siconc between the SST restoring experiments and CTRL
@@ -430,8 +431,8 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIC PERT - CTRL ($\%$)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig7b.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig7b.png')
 
 
 # Supp. Fig. 7c (SST+3K) - Maps of difference in March siconc between the SST restoring experiments and CTRL
@@ -531,8 +532,8 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIC PERT - CTRL ($\%$)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig7c.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig7c.png')
 
 
 # Supp. Fig. 7d - Maps of difference in September siconc between the SST restoring experiments and CTRL
@@ -632,8 +633,8 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIC PERT - CTRL ($\%$)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig7d.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig7d.png')
 
 
 # Supp. Fig. 7e (SST+1K) - Maps of difference in September siconc between the SST restoring experiments and CTRL
@@ -733,8 +734,8 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIC PERT - CTRL ($\%$)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig7e.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig7e.png')
 
 
 # Supp. Fig. 7f (SST+3K) - Maps of difference in September siconc between the SST restoring experiments and CTRL
@@ -834,5 +835,5 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIC PERT - CTRL ($\%$)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig7f.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig7f.png')

@@ -7,7 +7,7 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    09/07/2020
+    28/10/2020
 '''
 
 # Standard libraries
@@ -131,31 +131,41 @@ aht_D022 = ht_D022 - oht_ifs_D022
 aht_D023 = ht_D023 - oht_ifs_D023
 
 # Compute mean total HT 50 years
-ht_mean_D000 = np.nanmean(ht_D000,axis=0)
-ht_mean_D012 = np.nanmean(ht_D012,axis=0)
-ht_mean_D015 = np.nanmean(ht_D015,axis=0)
-ht_mean_D018 = np.nanmean(ht_D018,axis=0)
-ht_mean_D021 = np.nanmean(ht_D021,axis=0)
-ht_mean_D022 = np.nanmean(ht_D022,axis=0)
-ht_mean_D023 = np.nanmean(ht_D023,axis=0)
+start = 0
+ht_mean_D000 = np.nanmean(ht_D000[start::,:],axis=0)
+ht_mean_D012 = np.nanmean(ht_D012[start::,:],axis=0)
+ht_mean_D015 = np.nanmean(ht_D015[start::,:],axis=0)
+ht_mean_D018 = np.nanmean(ht_D018[start::,:],axis=0)
+ht_mean_D021 = np.nanmean(ht_D021[start::,:],axis=0)
+ht_mean_D022 = np.nanmean(ht_D022[start::,:],axis=0)
+ht_mean_D023 = np.nanmean(ht_D023[start::,:],axis=0)
 
 # Compute mean OHT 50 years
-oht_mean_D000 = np.nanmean(oht_D000,axis=0)
-oht_mean_D012 = np.nanmean(oht_D012,axis=0)
-oht_mean_D015 = np.nanmean(oht_D015,axis=0)
-oht_mean_D018 = np.nanmean(oht_D018,axis=0)
-oht_mean_D021 = np.nanmean(oht_D021,axis=0)
-oht_mean_D022 = np.nanmean(oht_D022,axis=0)
-oht_mean_D023 = np.nanmean(oht_D023,axis=0)
+oht_mean_D000 = np.nanmean(oht_D000[start::,:],axis=0)
+oht_mean_D012 = np.nanmean(oht_D012[start::,:],axis=0)
+oht_mean_D015 = np.nanmean(oht_D015[start::,:],axis=0)
+oht_mean_D018 = np.nanmean(oht_D018[start::,:],axis=0)
+oht_mean_D021 = np.nanmean(oht_D021[start::,:],axis=0)
+oht_mean_D022 = np.nanmean(oht_D022[start::,:],axis=0)
+oht_mean_D023 = np.nanmean(oht_D023[start::,:],axis=0)
+
+# Compute mean OHT on IFS grid 50 years
+oht_mean_ifs_D000 = np.nanmean(oht_ifs_D000[start::,:],axis=0)
+oht_mean_ifs_D012 = np.nanmean(oht_ifs_D012[start::,:],axis=0)
+oht_mean_ifs_D015 = np.nanmean(oht_ifs_D015[start::,:],axis=0)
+oht_mean_ifs_D018 = np.nanmean(oht_ifs_D018[start::,:],axis=0)
+oht_mean_ifs_D021 = np.nanmean(oht_ifs_D021[start::,:],axis=0)
+oht_mean_ifs_D022 = np.nanmean(oht_ifs_D022[start::,:],axis=0)
+oht_mean_ifs_D023 = np.nanmean(oht_ifs_D023[start::,:],axis=0)
 
 # Compute mean AHT 50 years
-aht_mean_D000 = np.nanmean(aht_D000,axis=0)
-aht_mean_D012 = np.nanmean(aht_D012,axis=0)
-aht_mean_D015 = np.nanmean(aht_D015,axis=0)
-aht_mean_D018 = np.nanmean(aht_D018,axis=0)
-aht_mean_D021 = np.nanmean(aht_D021,axis=0)
-aht_mean_D022 = np.nanmean(aht_D022,axis=0)
-aht_mean_D023 = np.nanmean(aht_D023,axis=0)
+aht_mean_D000 = np.nanmean(aht_D000[start::,:],axis=0)
+aht_mean_D012 = np.nanmean(aht_D012[start::,:],axis=0)
+aht_mean_D015 = np.nanmean(aht_D015[start::,:],axis=0)
+aht_mean_D018 = np.nanmean(aht_D018[start::,:],axis=0)
+aht_mean_D021 = np.nanmean(aht_D021[start::,:],axis=0)
+aht_mean_D022 = np.nanmean(aht_D022[start::,:],axis=0)
+aht_mean_D023 = np.nanmean(aht_D023[start::,:],axis=0)
 
 
 # Latitudinal transect of HT (50 years)
@@ -164,10 +174,10 @@ fig.subplots_adjust(left=0.1,bottom=0.08,right=0.95,top=0.95,wspace=0.3,hspace=0
 
 # CTRL Atlantic SST experiments
 ax[0,0].set_title('CTRL',fontsize=24)
-ax[0,0].plot(lat_ifs,ht_mean_D000,'b-',label='Total HT CTRL')
-ax[0,0].plot(lat_ifs,aht_mean_D000,'b--',label='AHT CTRL')
-ax[0,0].plot(lat,oht_mean_D000,'b:',label='OHT CTRL')
-ax[0,0].legend(loc='upper left',shadow=True,frameon=False,fontsize=18)
+ax[0,0].plot(lat_ifs,ht_mean_D000,'k-',linewidth=3,label='Total HT CTRL')
+ax[0,0].plot(lat_ifs,aht_mean_D000,'k:',linewidth=2,label='AHT CTRL')
+ax[0,0].plot(lat,oht_mean_D000,'k--',linewidth=2,label='OHT CTRL')
+ax[0,0].legend(loc='upper left',shadow=True,frameon=False,fontsize=20)
 ax[0,0].set_ylabel('Northward heat transport (PW)',fontsize=22)
 ax[0,0].set_xticks(np.arange(-90, 91, 30))
 ax[0,0].set_yticks(np.arange(-6, 6.1, 2))
@@ -181,10 +191,10 @@ fig.delaxes(ax[0,1])
 
 # AHT Atlantic SST experiments
 ax[1,0].set_title('Atlantic SST+3$^\circ$C experiments',fontsize=24)
-ax[1,0].plot(lat_ifs,aht_mean_D012-aht_mean_D000,'-',color='purple',label='ATL1+3$^\circ$C')
-ax[1,0].plot(lat_ifs,aht_mean_D015-aht_mean_D000,'-',color='red',label='ATL2+3$^\circ$C')
-ax[1,0].plot(lat_ifs,aht_mean_D018-aht_mean_D000,'-',color='lightcoral',label='ATL3+3$^\circ$C')
-ax[1,0].legend(loc='upper left',shadow=True,frameon=False,fontsize=18)
+ax[1,0].plot(lat_ifs,aht_mean_D012-aht_mean_D000,'-',color='red',linewidth=2,label='ATL1+3$^\circ$C')
+ax[1,0].plot(lat_ifs,aht_mean_D015-aht_mean_D000,'-',color='gray',linewidth=2,label='ATL2+3$^\circ$C')
+ax[1,0].plot(lat_ifs,aht_mean_D018-aht_mean_D000,'-',color='blue',linewidth=2,label='ATL3+3$^\circ$C')
+ax[1,0].legend(loc='upper left',shadow=True,frameon=False,fontsize=20)
 ax[1,0].set_ylabel('dAHT (PW)',fontsize=22)
 ax[1,0].set_xticks(np.arange(-90, 91, 30))
 ax[1,0].set_yticks(np.arange(-0.4, 0.41, 0.2))
@@ -195,10 +205,10 @@ ax[1,0].set_title('b',loc='left',fontsize=24,fontweight='bold')
 
 # AHT Pacific SST experiments
 ax[1,1].set_title('Pacific SST+3$^\circ$C experiments',fontsize=24)
-ax[1,1].plot(lat_ifs,aht_mean_D021-aht_mean_D000,'-',color='purple',label='PAC1+3$^\circ$C')
-ax[1,1].plot(lat_ifs,aht_mean_D022-aht_mean_D000,'-',color='red',label='PAC2+3$^\circ$C')
-ax[1,1].plot(lat_ifs,aht_mean_D023-aht_mean_D000,'-',color='lightcoral',label='PAC3+3$^\circ$C')
-ax[1,1].legend(loc='upper left',shadow=True,frameon=False,fontsize=18)
+ax[1,1].plot(lat_ifs,aht_mean_D021-aht_mean_D000,'-',color='green',linewidth=2,label='PAC1+3$^\circ$C')
+ax[1,1].plot(lat_ifs,aht_mean_D022-aht_mean_D000,'-',color='brown',linewidth=2,label='PAC2+3$^\circ$C')
+ax[1,1].plot(lat_ifs,aht_mean_D023-aht_mean_D000,'-',color='orange',linewidth=2,label='PAC3+3$^\circ$C')
+ax[1,1].legend(loc='upper left',shadow=True,frameon=False,fontsize=20)
 ax[1,1].set_ylabel('dAHT (PW)',fontsize=22)
 ax[1,1].set_xticks(np.arange(-90, 91, 30))
 ax[1,1].set_yticks(np.arange(-0.4, 0.41, 0.2))
@@ -209,10 +219,10 @@ ax[1,1].set_title('c',loc='left',fontsize=24,fontweight='bold')
 
 # OHT Atlantic SST experiments
 ax[2,0].set_title('Atlantic SST+3$^\circ$C experiments',fontsize=24)
-ax[2,0].plot(lat,oht_mean_D012-oht_mean_D000,'-',color='purple',label='ATL1+3$^\circ$C')
-ax[2,0].plot(lat,oht_mean_D015-oht_mean_D000,'-',color='red',label='ATL2+3$^\circ$C')
-ax[2,0].plot(lat,oht_mean_D018-oht_mean_D000,'-',color='lightcoral',label='ATL3+3$^\circ$C')
-ax[2,0].legend(loc='upper left',shadow=True,frameon=False,fontsize=18)
+ax[2,0].plot(lat,oht_mean_D012-oht_mean_D000,'-',color='red',linewidth=2,label='ATL1+3$^\circ$C')
+ax[2,0].plot(lat,oht_mean_D015-oht_mean_D000,'-',color='gray',linewidth=2,label='ATL2+3$^\circ$C')
+ax[2,0].plot(lat,oht_mean_D018-oht_mean_D000,'-',color='blue',linewidth=2,label='ATL3+3$^\circ$C')
+ax[2,0].legend(loc='upper left',shadow=True,frameon=False,fontsize=20)
 ax[2,0].set_xlabel('Latitude ($^{\circ}$)',fontsize=22)
 ax[2,0].set_ylabel('dOHT (PW)',fontsize=22)
 ax[2,0].set_xticks(np.arange(-90, 91, 30))
@@ -224,9 +234,9 @@ ax[2,0].set_title('d',loc='left',fontsize=24,fontweight='bold')
 
 # OHT Pacific SST experiments
 ax[2,1].set_title('Pacific SST+3$^\circ$C experiments',fontsize=24)
-ax[2,1].plot(lat,oht_mean_D021-oht_mean_D000,'-',color='purple',label='PAC1+3$^\circ$C')
-ax[2,1].plot(lat,oht_mean_D022-oht_mean_D000,'-',color='red',label='PAC2+3$^\circ$C')
-ax[2,1].plot(lat,oht_mean_D023-oht_mean_D000,'-',color='lightcoral',label='PAC3+3$^\circ$C')
+ax[2,1].plot(lat,oht_mean_D021-oht_mean_D000,'-',color='green',linewidth=2,label='PAC1+3$^\circ$C')
+ax[2,1].plot(lat,oht_mean_D022-oht_mean_D000,'-',color='brown',linewidth=2,label='PAC2+3$^\circ$C')
+ax[2,1].plot(lat,oht_mean_D023-oht_mean_D000,'-',color='orange',linewidth=2,label='PAC3+3$^\circ$C')
 ax[2,1].legend(loc='upper left',shadow=True,frameon=False,fontsize=18)
 ax[2,1].set_xlabel('Latitude ($^{\circ}$)',fontsize=22)
 ax[2,1].set_ylabel('dOHT (PW)',fontsize=20)
@@ -240,3 +250,4 @@ ax[2,1].set_title('e',loc='left',fontsize=24,fontweight='bold')
 # Save figure
 if save_fig == True:
     fig.savefig(dir_output + 'fig14.png')
+    fig.savefig(dir_output + 'fig14.eps',dpi=300)

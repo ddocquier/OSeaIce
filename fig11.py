@@ -20,7 +20,7 @@ dir_output = '/nobackup/rossby24/proj/rossby/joint_exp/oseaice/OSeaIce_Paper/'
 # Parameters
 siconc_threshold = 0.
 lat_threshold = 40.
-save_fig = False
+save_fig = True
 
 # Load vfxice
 if siconc_threshold == 0.:
@@ -258,6 +258,7 @@ if save_fig == True:
             fig.savefig(dir_output+'melt_terms_siconc0_lat80.png')
         else:
             fig.savefig(dir_output+'fig11.png')
+            fig.savefig(dir_output+'fig11.eps',dpi=300)
     elif siconc_threshold == 15.:
         fig.savefig(dir_output+'melt_terms_siconc15.png')
     elif siconc_threshold == 30.:

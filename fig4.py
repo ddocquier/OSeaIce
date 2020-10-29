@@ -8,7 +8,7 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    29/04/2020
+    23/10/2020
 '''
 
 # Standard libraries
@@ -23,7 +23,7 @@ dir_grid = '/nobackup/rossby24/proj/rossby/joint_exp/oseaice/grid/'
 dir_output = '/nobackup/rossby24/proj/rossby/joint_exp/oseaice/OSeaIce_Paper/'
 
 # Options
-save_fig = False
+save_fig = True
 
 # Load OHF D000
 filename = dir_input + 'D000/OHT_transects/oht_mean_D000.npy'
@@ -287,9 +287,9 @@ map = Basemap(projection='nplaea',boundinglat=boundlat,lon_0=l0,resolution='c')
 x,y = map(lon,lat)
 
 # Palettes
-palette_oht = plt.cm.YlOrRd._resample(20)
-min_oht = 0
-max_oht = 800
+palette_oht = plt.cm.cubehelix_r._resample(20)
+min_oht = 0.
+max_oht = 1000.
 palette_diff = plt.cm.seismic._resample(40)
 min_diff = -400.
 max_diff = 400.
@@ -301,7 +301,7 @@ fig.subplots_adjust(left=0.06,bottom=0.05,right=0.95,top=0.95,wspace=0.2,hspace=
 
 # D000
 cs=map.pcolor(x,y,oht_D000,vmin=min_oht,vmax=max_oht,cmap=palette_oht,ax=ax[0,0])
-map.contour(x,y,siconc_D000[2,:,:],range(15,16,5),colors='gray',ax=ax[0,0],linewidths=3)
+map.contour(x,y,siconc_D000[2,:,:],range(15,16,5),colors='blue',ax=ax[0,0],linewidths=3)
 map.contour(x,y,siconc_D000[8,:,:],range(15,16,5),colors='black',ax=ax[0,0],linewidths=3)
 map.drawparallels(np.arange(-80.,81.,10.),labels=[1,0,0,0],fontsize=24,ax=ax[0,0])
 map.drawmeridians(np.arange(-180.,181.,20.),labels=[0,0,0,1],fontsize=24,ax=ax[0,0])
@@ -313,7 +313,7 @@ ax[0,0].yaxis.set_label_coords(-0.05,0.9)
 
 # Add color bar absolute value
 cb_ax = fig.add_axes([0.35, 0.7, 0.015, 0.25])
-cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[0,200,400,600,800],extend='both')
+cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[0,250,500,750,1000],extend='both')
 cbar.ax.tick_params(labelsize=24)
 cbar.set_label('Horizontal OHF (kW m$^{-2}$)',fontsize=28)
 
@@ -323,7 +323,7 @@ fig.delaxes(ax[0,2])
 
 # D012
 cs=map.pcolor(x,y,oht_D012-oht_D000,vmin=min_diff,vmax=max_diff,cmap=palette_diff,ax=ax[1,0])
-map.contour(x,y,siconc_D012[2,:,:],range(15,16,5),colors='gray',ax=ax[1,0],linewidths=3)
+map.contour(x,y,siconc_D012[2,:,:],range(15,16,5),colors='blue',ax=ax[1,0],linewidths=3)
 map.contour(x,y,siconc_D012[8,:,:],range(15,16,5),colors='black',ax=ax[1,0],linewidths=3)
 map.drawparallels(np.arange(-80.,81.,10.),labels=[1,0,0,0],fontsize=24,ax=ax[1,0])
 map.drawmeridians(np.arange(-180.,181.,20.),labels=[0,0,0,1],fontsize=24,ax=ax[1,0])
@@ -335,7 +335,7 @@ ax[1,0].yaxis.set_label_coords(-0.05,0.9)
 
 # D015
 cs=map.pcolor(x,y,oht_D015-oht_D000,vmin=min_diff,vmax=max_diff,cmap=palette_diff,ax=ax[1,1])
-map.contour(x,y,siconc_D015[2,:,:],range(15,16,5),colors='gray',ax=ax[1,1],linewidths=3)
+map.contour(x,y,siconc_D015[2,:,:],range(15,16,5),colors='blue',ax=ax[1,1],linewidths=3)
 map.contour(x,y,siconc_D015[8,:,:],range(15,16,5),colors='black',ax=ax[1,1],linewidths=3)
 map.drawparallels(np.arange(-80.,81.,10.),labels=[1,0,0,0],fontsize=24,ax=ax[1,1])
 map.drawmeridians(np.arange(-180.,181.,20.),labels=[0,0,0,1],fontsize=24,ax=ax[1,1])
@@ -347,7 +347,7 @@ ax[1,1].yaxis.set_label_coords(-0.05,0.9)
 
 # D018
 cs=map.pcolor(x,y,oht_D018-oht_D000,vmin=min_diff,vmax=max_diff,cmap=palette_diff,ax=ax[1,2])
-map.contour(x,y,siconc_D018[2,:,:],range(15,16,5),colors='gray',ax=ax[1,2],linewidths=3)
+map.contour(x,y,siconc_D018[2,:,:],range(15,16,5),colors='blue',ax=ax[1,2],linewidths=3)
 map.contour(x,y,siconc_D018[8,:,:],range(15,16,5),colors='black',ax=ax[1,2],linewidths=3)
 map.drawparallels(np.arange(-80.,81.,10.),labels=[1,0,0,0],fontsize=24,ax=ax[1,2])
 map.drawmeridians(np.arange(-180.,181.,20.),labels=[0,0,0,1],fontsize=24,ax=ax[1,2])
@@ -359,7 +359,7 @@ ax[1,2].yaxis.set_label_coords(-0.05,0.9)
 
 # D021
 cs=map.pcolor(x,y,oht_D021-oht_D000,vmin=min_diff,vmax=max_diff,cmap=palette_diff,ax=ax[2,0])
-map.contour(x,y,siconc_D021[2,:,:],range(15,16,5),colors='gray',ax=ax[2,0],linewidths=3)
+map.contour(x,y,siconc_D021[2,:,:],range(15,16,5),colors='blue',ax=ax[2,0],linewidths=3)
 map.contour(x,y,siconc_D021[8,:,:],range(15,16,5),colors='black',ax=ax[2,0],linewidths=3)
 map.drawparallels(np.arange(-80.,81.,10.),labels=[1,0,0,0],fontsize=24,ax=ax[2,0])
 map.drawmeridians(np.arange(-180.,181.,20.),labels=[0,0,0,1],fontsize=24,ax=ax[2,0])
@@ -371,7 +371,7 @@ ax[2,0].yaxis.set_label_coords(-0.05,0.9)
 
 # D022
 cs=map.pcolor(x,y,oht_D022-oht_D000,vmin=min_diff,vmax=max_diff,cmap=palette_diff,ax=ax[2,1])
-map.contour(x,y,siconc_D022[2,:,:],range(15,16,5),colors='gray',ax=ax[2,1],linewidths=3)
+map.contour(x,y,siconc_D022[2,:,:],range(15,16,5),colors='blue',ax=ax[2,1],linewidths=3)
 map.contour(x,y,siconc_D022[8,:,:],range(15,16,5),colors='black',ax=ax[2,1],linewidths=3)
 map.drawparallels(np.arange(-80.,81.,10.),labels=[1,0,0,0],fontsize=24,ax=ax[2,1])
 map.drawmeridians(np.arange(-180.,181.,20.),labels=[0,0,0,1],fontsize=24,ax=ax[2,1])
@@ -383,7 +383,7 @@ ax[2,1].yaxis.set_label_coords(-0.05,0.9)
 
 # D023
 cs=map.pcolor(x,y,oht_D023-oht_D000,vmin=min_diff,vmax=max_diff,cmap=palette_diff,ax=ax[2,2])
-map.contour(x,y,siconc_D023[2,:,:],range(15,16,5),colors='gray',ax=ax[2,2],linewidths=3)
+map.contour(x,y,siconc_D023[2,:,:],range(15,16,5),colors='blue',ax=ax[2,2],linewidths=3)
 map.contour(x,y,siconc_D023[8,:,:],range(15,16,5),colors='black',ax=ax[2,2],linewidths=3)
 map.drawparallels(np.arange(-80.,81.,10.),labels=[1,0,0,0],fontsize=24,ax=ax[2,2])
 map.drawmeridians(np.arange(-180.,181.,20.),labels=[0,0,0,1],fontsize=24,ax=ax[2,2])
@@ -402,6 +402,7 @@ cbar.set_label('Horizontal OHF PERT - CTRL (kW m$^{-2}$)',fontsize=28)
 # Save figure
 if save_fig == True:
     fig.savefig(dir_output + 'fig4.png')
+    fig.savefig(dir_output + 'fig4.eps',dpi=300)
 
 
 # Fig. Supp. 4a (SST+1K) - OHF maps
@@ -509,8 +510,8 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('Horizontal OHF PERT - CTRL (kW m$^{-2}$)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output + 'fig4a.png')
+#if save_fig == True:
+#    fig.savefig(dir_output + 'fig4a.png')
 
 
 # Fig. Supp. 4b (SST+5K) - OHF maps
@@ -618,5 +619,5 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('Horizontal OHF PERT - CTRL (kW m$^{-2}$)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output + 'fig4b.png')
+#if save_fig == True:
+#    fig.savefig(dir_output + 'fig4b.png')

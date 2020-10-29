@@ -7,7 +7,7 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    19/05/2020
+    21/10/2020
 '''
 
 # Standard libraries
@@ -41,7 +41,7 @@ dir_output = dir_input + 'OSeaIce_Paper/'
 dir_mask = '/nobackup/rossby24/proj/rossby/joint_exp/oseaice/surface_restoring/'
 
 # Parameters
-save_fig = False
+save_fig = True
 month = 3
 month2 = 9
 
@@ -205,9 +205,9 @@ map = Basemap(projection='nplaea',boundinglat=boundlat,lon_0=l0,resolution='c')
 x,y = map(lon,lat)
 
 # Palettes and plot parameters
-palette_var = plt.cm.Oranges._resample(20)
+palette_var = plt.cm.plasma._resample(20)
 min_var = 0.
-max_var = 5.
+max_var = 4.
 palette_diff = plt.cm.seismic_r._resample(40)
 min_diff = -2.5
 max_diff = 2.5
@@ -229,7 +229,7 @@ ax[0,0].yaxis.set_label_coords(-0.05,0.9)
 
 # Add color bar absolute value
 cb_ax = fig.add_axes([0.35, 0.7, 0.015, 0.25])
-cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[0,1,2,3,4,5],extend='both')
+cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[0,1,2,3,4],extend='both')
 cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIT (m)',fontsize=28)
 
@@ -312,6 +312,7 @@ cbar.set_label('SIT PERT - CTRL (m)',fontsize=28)
 # Save figure
 if save_fig == True:
     fig.savefig(dir_output+'fig8.png')
+    fig.savefig(dir_output+'fig8.eps',dpi=300)
 
 
 # Supp. Fig. 8b (SST+1K) - Maps of difference in March sivol between the SST restoring experiments and CTRL
@@ -411,11 +412,11 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIT PERT - CTRL (m)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig8b.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig8b.png')
 
 
-# Supp. Fig. 8c (SST+3K) - Maps of difference in March sivol between the SST restoring experiments and CTRL
+# Supp. Fig. 8c (SST+5K) - Maps of difference in March sivol between the SST restoring experiments and CTRL
 fig,ax=plt.subplots(3,3,figsize=(18,18))
 fig.subplots_adjust(left=0.06,bottom=0.05,right=0.95,top=0.95,wspace=0.2,hspace=0.3)
 
@@ -512,8 +513,8 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIT PERT - CTRL (m)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig8c.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig8c.png')
 
 
 # Supp. Fig. 8d - Maps of difference in September sivol between the SST restoring experiments and CTRL
@@ -613,8 +614,8 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIT PERT - CTRL (m)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig8d.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig8d.png')
 
 
 # Supp. Fig. 8e (SST+1K) - Maps of difference in September sivol between the SST restoring experiments and CTRL
@@ -714,11 +715,11 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIT PERT - CTRL (m)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig8e.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig8e.png')
 
 
-# Supp. Fig. 8f (SST+3K) - Maps of difference in September sivol between the SST restoring experiments and CTRL
+# Supp. Fig. 8f (SST+5K) - Maps of difference in September sivol between the SST restoring experiments and CTRL
 fig,ax=plt.subplots(3,3,figsize=(18,18))
 fig.subplots_adjust(left=0.06,bottom=0.05,right=0.95,top=0.95,wspace=0.2,hspace=0.3)
 
@@ -815,5 +816,5 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('SIT PERT - CTRL (m)',fontsize=28)
 
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output+'fig8f.png')
+#if save_fig == True:
+#    fig.savefig(dir_output+'fig8f.png')

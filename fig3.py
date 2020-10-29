@@ -16,7 +16,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Option
-save_fig = False
+save_fig = True
 
 # Function to retrieve monthly mean
 def compute_monthly(nm,nmy,var):
@@ -741,3 +741,4 @@ ax[1,1].axhline(c='k')
 
 if save_fig == True:
     fig.savefig(dir_fig + 'fig3.png')
+    fig.savefig(dir_fig + 'fig3.eps',dpi=300)

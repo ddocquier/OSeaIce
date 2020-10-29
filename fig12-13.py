@@ -8,7 +8,7 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    25/05/2020
+    21/10/2020
 '''
 
 # Chosen variable
@@ -16,10 +16,10 @@ varname = 'vfxice'
 
 # Parameters
 siconc_threshold = 0.
-lat_threshold = 80.
-plot_fig = False
-save_fig = False
-save_var = True
+lat_threshold = 40.
+plot_fig = True
+save_fig = True
+save_var = False
 
 # Provide name for color bar based on variable name
 if varname == 'vfxice':
@@ -479,12 +479,15 @@ x,y = map(lon,lat)
 
 # Palettes and plot parameters
 if varname == 'vfxbom' or varname == 'vfxsum':
-    palette_var = plt.cm.seismic._resample(40)
+    palette_var = plt.cm.Reds._resample(40)
+    min_var = 0.
+    max_var = 3.
+    palette_diff = plt.cm.seismic._resample(40)
 else:
     palette_var = plt.cm.seismic_r._resample(40)
-min_var = -4.
-max_var = 4.
-palette_diff = palette_var
+    min_var = -4.
+    max_var = 4.
+    palette_diff = plt.cm.seismic_r._resample(40)
 min_diff = -2.
 max_diff = 2.
 
@@ -511,7 +514,12 @@ if plot_fig == True:
     
     # Add color bar absolute value
     cb_ax = fig.add_axes([0.35, 0.7, 0.015, 0.25])
+    #cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[0,1,2,3],extend='both')
     cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[-4,-2,0,2,4],extend='both')
+    #if varname == 'vfxbom' or 'vfxsum':
+    #    cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[0,1,2,3],extend='both')
+    #else:
+    #    cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[-4,-2,0,2,4],extend='both')
     cbar.ax.tick_params(labelsize=24)
     cbar.set_label(cbarname + ' (m year$^{-1}$)',fontsize=28)
     
@@ -590,3 +598,9 @@ if plot_fig == True:
     # Save figure
     if save_fig == True:
         fig.savefig(dir_output+varname+'.png')
+        if varname == 'vfxice':
+            fig.savefig(dir_output+'fig12.png')
+            fig.savefig(dir_output+'fig12.eps',dpi=300)
+        if varname == 'vfxbom':
+            fig.savefig(dir_output+'fig13.png')
+            fig.savefig(dir_output+'fig13.eps',dpi=300)

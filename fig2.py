@@ -9,7 +9,7 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    07/07/2020
+    21/10/2020
 '''
 
 # Standard libraries
@@ -68,6 +68,7 @@ dir_D022 = 'D022/OHT_transects/'
 dir_D023 = 'D023/OHT_transects/'
 dir_D024 = 'D024/OHT_transects/'
 dir_D025 = 'D025/OHT_transects/'
+dir_D026 = 'D026/OHT_transects/'
 dir_D027 = 'D027/OHT_transects/'
 dir_D028 = 'D028/OHT_transects/'
 dir_D029 = 'D029/OHT_transects/'
@@ -179,6 +180,13 @@ oht_bering_D025 = np.load(dir_output + dir_D025 + 'oht_bering_D025.npy')
 oht_fram_D025 = np.load(dir_output + dir_D025 + 'oht_fram_D025.npy')
 oht_davis_D025 = np.load(dir_output + dir_D025 + 'oht_davis_D025.npy')
 oht_total_D025 = oht_full_barents_D025 + oht_bering_D025 + oht_fram_D025 + oht_davis_D025
+
+# Load OHT D026
+oht_full_barents_D026 = np.load(dir_output + dir_D026 + 'oht_full_barents_D026.npy')
+oht_bering_D026 = np.load(dir_output + dir_D026 + 'oht_bering_D026.npy')
+oht_fram_D026 = np.load(dir_output + dir_D026 + 'oht_fram_D026.npy')
+oht_davis_D026 = np.load(dir_output + dir_D026 + 'oht_davis_D026.npy')
+oht_total_D026 = oht_full_barents_D026 + oht_bering_D026 + oht_fram_D026 + oht_davis_D026
 
 # Load OHT D027
 oht_full_barents_D027 = np.load(dir_output + dir_D027 + 'oht_full_barents_D027.npy')
@@ -318,6 +326,13 @@ oht_annmean_fram_D025 = np.nanmean(oht_fram_D025*conv_fac,axis=1)
 oht_annmean_davis_D025 = np.nanmean(oht_davis_D025*conv_fac,axis=1)
 oht_annmean_total_D025 = np.nanmean(oht_total_D025*conv_fac,axis=1)
 
+# Compute annual mean OHT D026
+oht_annmean_full_barents_D026 = np.nanmean(oht_full_barents_D026*conv_fac,axis=1)
+oht_annmean_bering_D026 = np.nanmean(oht_bering_D026*conv_fac,axis=1)
+oht_annmean_fram_D026 = np.nanmean(oht_fram_D026*conv_fac,axis=1)
+oht_annmean_davis_D026 = np.nanmean(oht_davis_D026*conv_fac,axis=1)
+oht_annmean_total_D026 = np.nanmean(oht_total_D026*conv_fac,axis=1)
+
 # Compute annual mean OHT D027
 oht_annmean_full_barents_D027 = np.nanmean(oht_full_barents_D027*conv_fac,axis=1)
 oht_annmean_bering_D027 = np.nanmean(oht_bering_D027*conv_fac,axis=1)
@@ -366,6 +381,7 @@ print('PAC2+3K = ',np.round(np.nanmean(oht_annmean_total_D022),1),'+/-',np.round
 print('PAC2+5K = ',np.round(np.nanmean(oht_annmean_total_D030),1),'+/-',np.round(np.nanstd(oht_annmean_total_D030),1),' TW',compute_sig(nyears,oht_annmean_total_D030,oht_annmean_total_D000))
 print('PAC3+1K = ',np.round(np.nanmean(oht_annmean_total_D024),1),'+/-',np.round(np.nanstd(oht_annmean_total_D024),1),' TW',compute_sig(nyears,oht_annmean_total_D024,oht_annmean_total_D000))
 print('PAC3+3K = ',np.round(np.nanmean(oht_annmean_total_D023),1),'+/-',np.round(np.nanstd(oht_annmean_total_D023),1),' TW',compute_sig(nyears,oht_annmean_total_D023,oht_annmean_total_D000))
+print('PAC3+3Kb = ',np.round(np.nanmean(oht_annmean_total_D026),1),'+/-',np.round(np.nanstd(oht_annmean_total_D026),1),' TW',compute_sig(nyears,oht_annmean_total_D026,oht_annmean_total_D000))
 print('PAC3+5K = ',np.round(np.nanmean(oht_annmean_total_D025),1),'+/-',np.round(np.nanstd(oht_annmean_total_D025),1),' TW',compute_sig(nyears,oht_annmean_total_D025,oht_annmean_total_D000))
 print('PAC3+3K - PAC2+3K = ',np.round(np.nanmean(oht_annmean_total_D023)-np.nanmean(oht_annmean_total_D022),1),' TW',compute_sig(nyears,oht_annmean_total_D023,oht_annmean_total_D022))
 print('PAC3+3K - PAC3+5K = ',np.round(np.nanmean(oht_annmean_total_D023)-np.nanmean(oht_annmean_total_D025),1),' TW',compute_sig(nyears,oht_annmean_total_D023,oht_annmean_total_D025))
@@ -456,6 +472,12 @@ print('PAC2+5K = ',np.round(np.nanmean(oht_annmean_davis_D030),1),'+/-',np.round
 print('PAC3+1K = ',np.round(np.nanmean(oht_annmean_davis_D024),1),'+/-',np.round(np.nanstd(oht_annmean_davis_D024),1),' TW',compute_sig(nyears,oht_annmean_davis_D024,oht_annmean_davis_D000))
 print('PAC3+3K = ',np.round(np.nanmean(oht_annmean_davis_D023),1),'+/-',np.round(np.nanstd(oht_annmean_davis_D023),1),' TW',compute_sig(nyears,oht_annmean_davis_D023,oht_annmean_davis_D000))
 print('PAC3+5K = ',np.round(np.nanmean(oht_annmean_davis_D025),1),'+/-',np.round(np.nanstd(oht_annmean_davis_D025),1),' TW',compute_sig(nyears,oht_annmean_davis_D025,oht_annmean_davis_D000))
+print('-----------')
+print('PAC3+3K - PAC2+3K = ',np.round(np.nanmean(oht_annmean_total_D023)-np.nanmean(oht_annmean_total_D022),1),' TW',compute_sig(nyears,oht_annmean_total_D023,oht_annmean_total_D022))
+print('PAC3+3Kb - PAC2+3K = ',np.round(np.nanmean(oht_annmean_total_D026)-np.nanmean(oht_annmean_total_D022),1),' TW',compute_sig(nyears,oht_annmean_total_D026,oht_annmean_total_D022))
+print('PAC3+3K - PAC1+3K = ',np.round(np.nanmean(oht_annmean_total_D023)-np.nanmean(oht_annmean_total_D021),1),' TW',compute_sig(nyears,oht_annmean_total_D023,oht_annmean_total_D021))
+print('ATL3+3K - ATL2+3K = ',np.round(np.nanmean(oht_annmean_total_D018)-np.nanmean(oht_annmean_total_D015),1),' TW',compute_sig(nyears,oht_annmean_total_D018,oht_annmean_total_D015))
+print('ATL2+3K - ATL1+3K = ',np.round(np.nanmean(oht_annmean_total_D015)-np.nanmean(oht_annmean_total_D012),1),' TW',compute_sig(nyears,oht_annmean_total_D015,oht_annmean_total_D012))
 
 # Save annual mean OHT
 if save_var == True:
@@ -465,6 +487,10 @@ if save_var == True:
     np.save(filename,[oht_annmean_full_barents_D000,oht_annmean_full_barents_D012,oht_annmean_full_barents_D013,oht_annmean_full_barents_D014,oht_annmean_full_barents_D015,oht_annmean_full_barents_D016,oht_annmean_full_barents_D017,oht_annmean_full_barents_D018,oht_annmean_full_barents_D019,oht_annmean_full_barents_D020,oht_annmean_full_barents_D021,oht_annmean_full_barents_D022,oht_annmean_full_barents_D023,oht_annmean_full_barents_D024,oht_annmean_full_barents_D025,oht_annmean_full_barents_D027,oht_annmean_full_barents_D028,oht_annmean_full_barents_D029,oht_annmean_full_barents_D030])
     filename = dir_fig + 'OHT_annmean_Bering.npy'
     np.save(filename,[oht_annmean_bering_D000,oht_annmean_bering_D012,oht_annmean_bering_D013,oht_annmean_bering_D014,oht_annmean_bering_D015,oht_annmean_bering_D016,oht_annmean_bering_D017,oht_annmean_bering_D018,oht_annmean_bering_D019,oht_annmean_bering_D020,oht_annmean_bering_D021,oht_annmean_bering_D022,oht_annmean_bering_D023,oht_annmean_bering_D024,oht_annmean_bering_D025,oht_annmean_bering_D027,oht_annmean_bering_D028,oht_annmean_bering_D029,oht_annmean_bering_D030])
+    filename = dir_fig + 'OHT_annmean_Fram.npy'
+    np.save(filename,[oht_annmean_fram_D000,oht_annmean_fram_D012,oht_annmean_fram_D013,oht_annmean_fram_D014,oht_annmean_fram_D015,oht_annmean_fram_D016,oht_annmean_fram_D017,oht_annmean_fram_D018,oht_annmean_fram_D019,oht_annmean_fram_D020,oht_annmean_fram_D021,oht_annmean_fram_D022,oht_annmean_fram_D023,oht_annmean_fram_D024,oht_annmean_fram_D025,oht_annmean_fram_D027,oht_annmean_fram_D028,oht_annmean_fram_D029,oht_annmean_fram_D030])
+    filename = dir_fig + 'OHT_annmean_Davis.npy'
+    np.save(filename,[oht_annmean_davis_D000,oht_annmean_davis_D012,oht_annmean_davis_D013,oht_annmean_davis_D014,oht_annmean_davis_D015,oht_annmean_davis_D016,oht_annmean_davis_D017,oht_annmean_davis_D018,oht_annmean_davis_D019,oht_annmean_davis_D020,oht_annmean_davis_D021,oht_annmean_davis_D022,oht_annmean_davis_D023,oht_annmean_davis_D024,oht_annmean_davis_D025,oht_annmean_davis_D027,oht_annmean_davis_D028,oht_annmean_davis_D029,oht_annmean_davis_D030])
 
 # Labels
 name_xticks = ['0','10','20','30','40','50']
@@ -476,10 +502,10 @@ fig.subplots_adjust(left=0.1,bottom=0.09,right=0.95,top=0.95,wspace=None,hspace=
 
 # Atlantic SST experiments
 ax[0].set_title('Atlantic SST+3$^\circ$C experiments',fontsize=26)
-ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D000,'-',linewidth=2,label='CTRL')
-ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D012,'--',color='purple',label='ATL1+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D012-oht_annmean_total_D000),1))+')')
-ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D015,'r--',label='ATL2+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D015-oht_annmean_total_D000),1))+')')
-ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D018,'--',color='lightcoral',label='ATL3+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D018-oht_annmean_total_D000),1))+')')
+ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D000,'k-',linewidth=3,label='CTRL')
+ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D012,'r-',linewidth=2,label='ATL1+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D012-oht_annmean_total_D000),1))+')')
+ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D015,'-',color='gray',linewidth=2,label='ATL2+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D015-oht_annmean_total_D000),1))+')')
+ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D018,'b-',linewidth=2,label='ATL3+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D018-oht_annmean_total_D000),1))+')')
 ax[0].legend(loc='lower left',shadow=True,frameon=False,fontsize=18,ncol=2)
 ax[0].set_ylabel('Total Arctic OHT (TW)',fontsize=24)
 ax[0].set_title('a',loc='left',fontsize=24,fontweight='bold')
@@ -492,10 +518,10 @@ ax[0].grid()
 
 # Pacific SST experiments
 ax[1].set_title('Pacific SST+3$^\circ$C experiments',fontsize=26)
-ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D000,'-',linewidth=2,label='CTRL')
-ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D021,'--',color='purple',label='PAC1+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D021-oht_annmean_total_D000),1))+')')
-ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D022,'r--',label='PAC2+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D022-oht_annmean_total_D000),1))+')')
-ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D023,'--',color='lightcoral',label='PAC3+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D023-oht_annmean_total_D000),1))+')')
+ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D000,'k-',linewidth=3,label='CTRL')
+ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D021,'g-',linewidth=2,label='PAC1+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D021-oht_annmean_total_D000),1))+')')
+ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D022,'-',color='brown',linewidth=2,label='PAC2+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D022-oht_annmean_total_D000),1))+')')
+ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D023,'-',color='orange',linewidth=2,label='PAC3+3$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D023-oht_annmean_total_D000),1))+')')
 ax[1].legend(loc='lower left',shadow=True,frameon=False,fontsize=18,ncol=2)
 ax[1].set_xlabel('Year',fontsize=24)
 ax[1].set_ylabel('Total Arctic OHT (TW)',fontsize=24)
@@ -509,6 +535,7 @@ ax[1].grid()
 
 if save_fig == True:
     fig.savefig(dir_fig + 'fig2.png')
+    fig.savefig(dir_fig + 'fig2.eps',dpi=300)
 
 
 # Supp. Fig. 2a (SST+1K) - Time series of annual mean total OHT to the Arctic
@@ -548,8 +575,8 @@ ax[1].tick_params(axis='both',labelsize=16)
 ax[1].axis([0, 52, 0, 280])
 ax[1].grid()
 
-if save_fig == True:
-    fig.savefig(dir_fig + 'fig2a.png')
+#if save_fig == True:
+#    fig.savefig(dir_fig + 'fig2a.png')
 
 
 # Supp. Fig. 2b (SST+5K) - Time series of annual mean total OHT to the Arctic
@@ -589,5 +616,5 @@ ax[1].tick_params(axis='both',labelsize=16)
 ax[1].axis([0, 52, 0, 280])
 ax[1].grid()
 
-if save_fig == True:
-    fig.savefig(dir_fig + 'fig2b.png')
+#if save_fig == True:
+#    fig.savefig(dir_fig + 'fig2b.png')

@@ -268,6 +268,7 @@ cbar.set_label('Temperature PERT-CTRL ($^{\circ}$C)',fontsize=24)
 # Save figure
 if save_fig == True:
     fig.savefig(dir_output + 'fig10.png')
+    fig.savefig(dir_output + 'fig10.eps',dpi=300)
 
 
 # Supp. Fig. 10c (SST+1K) - Plots of thetao difference in the Atlantic Arctic
@@ -353,8 +354,8 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('Temperature PERT-CTRL ($^{\circ}$C)',fontsize=24)
       
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output + 'fig10c.png')
+#if save_fig == True:
+#    fig.savefig(dir_output + 'fig10c.png')
     
     
 # Supp. Fig. 10d (SST+1K) - Plots of thetao difference in the Pacific Arctic
@@ -440,8 +441,8 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('Temperature PERT-CTRL ($^{\circ}$C)',fontsize=24)
       
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output + 'fig10d.png')
+#if save_fig == True:
+#    fig.savefig(dir_output + 'fig10d.png')
 
 
 # Supp. Fig. 10e (SST+5K) - Plots of thetao difference in the Atlantic Arctic
@@ -614,5 +615,5 @@ cbar.ax.tick_params(labelsize=24)
 cbar.set_label('Temperature PERT-CTRL ($^{\circ}$C)',fontsize=24)
       
 # Save figure
-if save_fig == True:
-    fig.savefig(dir_output + 'fig10f.png')
+#if save_fig == True:
+#    fig.savefig(dir_output + 'fig10f.png')
