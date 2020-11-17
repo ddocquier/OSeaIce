@@ -4,4 +4,4 @@ This repository provides the Python scripts to produce the figures of the paper 
 
 Docquier et al. (2020). Impact of ocean heat transport on the Arctic sea-ice decline: A model study with EC-Earth3. Accepted in Climate Dynamics.
 
-DOI of the Zenodo repository: http://doi.org/10.5281/zenodo.4156781
+DOI of the Zenodo repository: http://doi.org/10.5281/zenodo.4277877
