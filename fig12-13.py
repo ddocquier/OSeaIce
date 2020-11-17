@@ -8,7 +8,7 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    21/10/2020
+    17/11/2020
 '''
 
 # Chosen variable
@@ -24,18 +24,8 @@ save_var = False
 # Provide name for color bar based on variable name
 if varname == 'vfxice':
     cbarname = 'Net ice growth'
-elif varname == 'vfxbog':
-    cbarname = 'Basal growth'
-elif varname == 'vfxopw':
-    cbarname = 'Open-water growth'
 elif varname == 'vfxbom':
     cbarname = 'Basal melt'
-elif varname == 'vfxsum':
-    cbarname = 'Surface melt'
-elif varname == 'vfxdyn':
-    cbarname = 'Dynamic growth'
-elif varname == 'vfxsni':
-    cbarname = 'Snow-ice formation'
 
 # Standard libraries
 from netCDF4 import Dataset
@@ -460,15 +450,7 @@ if varname == 'vfxbom' or varname == 'vfxsum':
            
 # Save spatial averages
 if save_var == True:
-    if siconc_threshold == 0.:
-        if lat_threshold == 80.:
-            filename = dir_output + varname + '_siconc0_lat80.npy'
-        else:
-            filename = dir_output + varname + '_siconc0.npy'
-    elif siconc_threshold == 15.:
-        filename = dir_output + varname + '_siconc15.npy'
-    elif siconc_threshold == 30.:
-        filename = dir_output + varname + '_siconc30.npy'
+    filename = dir_output + varname + '_siconc0.npy'
     np.save(filename,[var_spatialmean_D000,var_spatialmean_D012,var_spatialmean_D013,var_spatialmean_D014,var_spatialmean_D015,var_spatialmean_D016,var_spatialmean_D017,var_spatialmean_D018,var_spatialmean_D019,var_spatialmean_D020,var_spatialmean_D021,var_spatialmean_D022,var_spatialmean_D023,var_spatialmean_D024,var_spatialmean_D025,var_spatialmean_D027,var_spatialmean_D028,var_spatialmean_D029,var_spatialmean_D030])
              
 # Map projection
@@ -514,12 +496,7 @@ if plot_fig == True:
     
     # Add color bar absolute value
     cb_ax = fig.add_axes([0.35, 0.7, 0.015, 0.25])
-    #cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[0,1,2,3],extend='both')
     cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[-4,-2,0,2,4],extend='both')
-    #if varname == 'vfxbom' or 'vfxsum':
-    #    cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[0,1,2,3],extend='both')
-    #else:
-    #    cbar = fig.colorbar(cs,cax=cb_ax,orientation='vertical',ticks=[-4,-2,0,2,4],extend='both')
     cbar.ax.tick_params(labelsize=24)
     cbar.set_label(cbarname + ' (m year$^{-1}$)',fontsize=28)
     

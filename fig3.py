@@ -8,7 +8,7 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    09/06/2020
+    17/11/2020
 '''
 
 # Standard libraries

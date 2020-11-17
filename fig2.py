@@ -9,7 +9,7 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    21/10/2020
+    17/11/2020
 '''
 
 # Standard libraries
@@ -17,7 +17,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 
-# Convertion factor to use if OHT was computed using cst values from CDFTOOLS
+# Conversion factor to use if OHT was computed using cst values from CDFTOOLS
 rho_lien = 1027.
 cp_lien = 3985.
 rho_cdftools = 1000.
@@ -25,8 +25,8 @@ cp_cdftools = 4000.
 conv_fac = (rho_lien * cp_lien) / (rho_cdftools * cp_cdftools)
 
 # Options
-save_fig = False
-save_var = False
+save_fig = True
+save_var = True
 
 # Function to compute significativity of difference between two means
 def compute_sig(n,var1,var2):
@@ -53,26 +53,26 @@ def compute_sig(n,var1,var2):
 
 # Working directories
 dir_output = '/nobackup/rossby24/proj/rossby/joint_exp/oseaice/post-proc/'
-dir_D000 = 'D000/OHT_transects/'
-dir_D012 = 'D012/OHT_transects/'
-dir_D013 = 'D013/OHT_transects/'
-dir_D014 = 'D014/OHT_transects/'
-dir_D015 = 'D015/OHT_transects/'
-dir_D016 = 'D016/OHT_transects/'
-dir_D017 = 'D017/OHT_transects/'
-dir_D018 = 'D018/OHT_transects/'
-dir_D019 = 'D019/OHT_transects/'
-dir_D020 = 'D020/OHT_transects/'
-dir_D021 = 'D021/OHT_transects/'
-dir_D022 = 'D022/OHT_transects/'
-dir_D023 = 'D023/OHT_transects/'
-dir_D024 = 'D024/OHT_transects/'
-dir_D025 = 'D025/OHT_transects/'
-dir_D026 = 'D026/OHT_transects/'
-dir_D027 = 'D027/OHT_transects/'
-dir_D028 = 'D028/OHT_transects/'
-dir_D029 = 'D029/OHT_transects/'
-dir_D030 = 'D030/OHT_transects/'
+dir_D000 = 'D000/OHT_transects/' # CTRL
+dir_D012 = 'D012/OHT_transects/' # ATL1+3K
+dir_D013 = 'D013/OHT_transects/' # ATL1+1K
+dir_D014 = 'D014/OHT_transects/' # ATL1+5K
+dir_D015 = 'D015/OHT_transects/' # ATL2+3K
+dir_D016 = 'D016/OHT_transects/' # ATL2+1K
+dir_D017 = 'D017/OHT_transects/' # ATL2+5K
+dir_D018 = 'D018/OHT_transects/' # ATL3+3K
+dir_D019 = 'D019/OHT_transects/' # ATL3+1K
+dir_D020 = 'D020/OHT_transects/' # ATL3+5K
+dir_D021 = 'D021/OHT_transects/' # PAC1+3K
+dir_D022 = 'D022/OHT_transects/' # PAC2+3K
+dir_D023 = 'D023/OHT_transects/' # PAC3+3K
+dir_D024 = 'D024/OHT_transects/' # PAC3+1K
+dir_D025 = 'D025/OHT_transects/' # PAC3+5K
+dir_D026 = 'D026/OHT_transects/' # PAC3+3Kb
+dir_D027 = 'D027/OHT_transects/' # PAC1+1K
+dir_D028 = 'D028/OHT_transects/' # PAC1+5K
+dir_D029 = 'D029/OHT_transects/' # PAC2+1K
+dir_D030 = 'D030/OHT_transects/' # PAC2+5K
 dir_fig = '/nobackup/rossby24/proj/rossby/joint_exp/oseaice/OSeaIce_Paper/'
 
 # Load OHT D000
@@ -536,85 +536,3 @@ ax[1].grid()
 if save_fig == True:
     fig.savefig(dir_fig + 'fig2.png')
     fig.savefig(dir_fig + 'fig2.eps',dpi=300)
-
-
-# Supp. Fig. 2a (SST+1K) - Time series of annual mean total OHT to the Arctic
-fig,ax = plt.subplots(2,1,figsize=(15,12))
-fig.subplots_adjust(left=0.1,bottom=0.09,right=0.95,top=0.95,wspace=None,hspace=0.2)
-
-# Atlantic SST experiments
-ax[0].set_title('Atlantic SST+1$^\circ$C experiments',fontsize=26)
-ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D000,'-',linewidth=2,label='CTRL')
-ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D013,'--',color='purple',label='ATL1+1$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D013-oht_annmean_total_D000),1))+')')
-ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D016,'r--',label='ATL2+1$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D016-oht_annmean_total_D000),1))+')')
-ax[0].plot(np.arange(nyears) + 1,oht_annmean_total_D019,'--',color='lightcoral',label='ATL3+1$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D019-oht_annmean_total_D000),1))+')')
-ax[0].legend(loc='lower left',shadow=True,frameon=False,fontsize=18,ncol=2)
-ax[0].set_ylabel('Total Arctic OHT (TW)',fontsize=24)
-ax[0].set_title('a',loc='left',fontsize=24,fontweight='bold')
-ax[0].set_xticks(np.arange(1, 53, 10))
-ax[0].set_xticklabels(name_xticks)
-ax[0].set_yticks(np.arange(0, 271, 30))
-ax[0].tick_params(axis='both',labelsize=16)
-ax[0].axis([0, 52, 0, 280])
-ax[0].grid()
-
-# Pacific SST experiments
-ax[1].set_title('Pacific SST+1$^\circ$C experiments',fontsize=26)
-ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D000,'-',linewidth=2,label='CTRL')
-ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D027,'--',color='purple',label='PAC1+1$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D027-oht_annmean_total_D000),1))+')')
-ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D029,'r--',label='PAC2+1$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D029-oht_annmean_total_D000),1))+')')
-ax[1].plot(np.arange(nyears) + 1,oht_annmean_total_D024,'--',color='lightcoral',label='PAC3+1$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D024-oht_annmean_total_D000),1))+')')
-ax[1].legend(loc='lower left',shadow=True,frameon=False,fontsize=18,ncol=2)
-ax[1].set_xlabel('Year',fontsize=24)
-ax[1].set_ylabel('Total Arctic OHT (TW)',fontsize=24)
-ax[1].set_title('b',loc='left',fontsize=24,fontweight='bold')
-ax[1].set_xticks(np.arange(1, 53, 10))
-ax[1].set_xticklabels(name_xticks)
-ax[1].set_yticks(np.arange(0, 271, 30))
-ax[1].tick_params(axis='both',labelsize=16)
-ax[1].axis([0, 52, 0, 280])
-ax[1].grid()
-
-#if save_fig == True:
-#    fig.savefig(dir_fig + 'fig2a.png')
-
-
-# Supp. Fig. 2b (SST+5K) - Time series of annual mean total OHT to the Arctic
-fig,ax = plt.subplots(2,1,figsize=(15,12))
-fig.subplots_adjust(left=0.1,bottom=0.09,right=0.95,top=0.95,wspace=None,hspace=0.2)
-
-# Atlantic SST experiments
-ax[0].set_title('Atlantic SST+5$^\circ$C experiments',fontsize=26)
-ax[0].plot(np.arange(nyears) + 2,oht_annmean_total_D000,'-',linewidth=2,label='CTRL')
-ax[0].plot(np.arange(nyears) + 2,oht_annmean_total_D014,'--',color='purple',label='ATL1+5$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D014-oht_annmean_total_D000),1))+')')
-ax[0].plot(np.arange(nyears) + 2,oht_annmean_total_D017,'r--',label='ATL2+5$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D017-oht_annmean_total_D000),1))+')')
-ax[0].plot(np.arange(nyears) + 2,oht_annmean_total_D020,'--',color='lightcoral',label='ATL3+5$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D020-oht_annmean_total_D000),1))+')')
-ax[0].legend(loc='lower left',shadow=True,frameon=False,fontsize=18,ncol=2)
-ax[0].set_ylabel('Total Arctic OHT (TW)',fontsize=24)
-ax[0].set_title('a',loc='left',fontsize=24,fontweight='bold')
-ax[0].set_xticks(np.arange(1, 53, 10))
-ax[0].set_xticklabels(name_xticks)
-ax[0].set_yticks(np.arange(0, 271, 30))
-ax[0].tick_params(axis='both',labelsize=16)
-ax[0].axis([0, 52, 0, 280])
-ax[0].grid()
-
-# Pacific SST experiments
-ax[1].set_title('Pacific SST+5$^\circ$C experiments',fontsize=26)
-ax[1].plot(np.arange(nyears) + 2,oht_annmean_total_D000,'-',linewidth=2,label='CTRL')
-ax[1].plot(np.arange(nyears) + 2,oht_annmean_total_D028,'--',color='purple',label='PAC1+5$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D028-oht_annmean_total_D000),1))+')')
-ax[1].plot(np.arange(nyears) + 2,oht_annmean_total_D030,'r--',label='PAC2+5$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D030-oht_annmean_total_D000),1))+')')
-ax[1].plot(np.arange(nyears) + 2,oht_annmean_total_D025,'--',color='lightcoral',label='PAC3+5$^\circ$C ('+str(np.round(np.nanmean(oht_annmean_total_D025-oht_annmean_total_D000),1))+')')
-ax[1].legend(loc='lower left',shadow=True,frameon=False,fontsize=18,ncol=2)
-ax[1].set_xlabel('Year',fontsize=24)
-ax[1].set_ylabel('Total Arctic OHT (TW)',fontsize=24)
-ax[1].set_title('b',loc='left',fontsize=24,fontweight='bold')
-ax[1].set_xticks(np.arange(1, 53, 10))
-ax[1].set_xticklabels(name_xticks)
-ax[1].set_yticks(np.arange(0, 271, 30))
-ax[1].tick_params(axis='both',labelsize=16)
-ax[1].axis([0, 52, 0, 280])
-ax[1].grid()
-
-#if save_fig == True:
-#    fig.savefig(dir_fig + 'fig2b.png')

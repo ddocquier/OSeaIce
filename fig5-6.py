@@ -8,7 +8,7 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    21/10/2020
+    17/11/2020
 '''
 
 # Standard libraries
@@ -22,7 +22,6 @@ save_var = False
 
 # Working directories
 dir_input = '/nobackup/rossby24/proj/rossby/joint_exp/oseaice/'
-dir_t613 = dir_input + 'post-proc/t613/'
 dir_D000 = dir_input + 'post-proc/D000/'
 dir_D012 = dir_input + 'post-proc/D012/'
 dir_D013 = dir_input + 'post-proc/D013/'
@@ -195,10 +194,6 @@ area_D029,area_barents_D029,area_greenland_D029,area_labrador_D029,area_laptev_D
 filename = dir_D030 + 'SIarea_D030.npy'
 area_D030,area_barents_D030,area_greenland_D030,area_labrador_D030,area_laptev_D030,area_chukchi_D030,area_beaufort_D030,area_central_D030 = np.load(filename)
 
-# Load sea-ice area EC-Earth t613
-filename = dir_t613 + 'SIarea_t613_1950-2014.npy'
-area,area_barents,area_greenland,area_labrador,area_laptev,area_chukchi,area_beaufort,area_central = np.load(filename)
-
 # Load sea-ice area OSI SAF (OSI-450) 1979-2015
 filename = dir_t613 + 'SIarea_OSI-450_1979-2015.npy'
 area_obs,area_barents_obs,area_greenland_obs,area_labrador_obs,area_laptev_obs,area_chukchi_obs,area_beaufort_obs,area_central_obs = np.load(filename)
@@ -288,10 +283,6 @@ volume_D029,volume_barents_D029,volume_greenland_D029,volume_labrador_D029,volum
 # Load sea-ice volume EC-Earth D030
 filename = dir_D030 + 'SIvolume_D030.npy'
 volume_D030,volume_barents_D030,volume_greenland_D030,volume_labrador_D030,volume_laptev_D030,volume_chukchi_D030,volume_beaufort_D030,volume_central_D030 = np.load(filename)
-
-# Load sea-ice volume EC-Earth t613
-filename = dir_t613 + 'SIvolume_t613_1950-2014.npy'
-volume,volume_barents,volume_greenland,volume_labrador,volume_laptev,volume_chukchi,volume_beaufort,volume_central = np.load(filename)
 
 # Time parameters
 nmy = 12
@@ -547,46 +538,6 @@ print('PAC3+3K - PAC3+5K =',compute_sig(nyears_D013,volume_mon_D023[month,:],vol
 print('------------')
 
 
-# Compute trend in March sea-ice area
-month = 2
-trend_area,sd_area,trend_area_percent,sig_area = compute_trend(nyears,area_mon[month,:])
-trend_area_D000,sd_area_D000,trend_area_percent_D000,sig_area_D000 = compute_trend(nyears_D000,area_mon_D000[month,:])
-trend_area_obs,sd_area_obs,trend_area_percent_obs,sig_area_obs = compute_trend(nyears_obs,area_obs_mon[month,:])
-print('Trend in March sea-ice area (10^6 km^2/decade)')
-print('hist =',trend_area,'(',sig_area,')')
-print('CTRL =',trend_area_D000,'(',sig_area_D000,')')
-print('OSI SAF =',trend_area_obs,'(',sig_area_obs,')')
-
-# Compute trend in September sea-ice area
-month = 8
-trend_area,sd_area,trend_area_percent,sig_area = compute_trend(nyears,area_mon[month,:])
-trend_area_D000,sd_area_D000,trend_area_percent_D000,sig_area_D000 = compute_trend(nyears_D000,area_mon_D000[month,:])
-trend_area_obs,sd_area_obs,trend_area_percent_obs,sig_area_obs = compute_trend(nyears_obs,area_obs_mon[month,:])
-print('Trend in September sea-ice area (10^6 km^2/decade)')
-print('hist =',trend_area,'(',sig_area,')')
-print('CTRL =',trend_area_D000,'(',sig_area_D000,')')
-print('OSI SAF =',trend_area_obs,'(',sig_area_obs,')')
-
-# Compute trend in March sea-ice volume
-month = 2
-trend_volume,sd_volume,trend_volume_percent,sig_volume = compute_trend(nyears,volume_mon[month,:])
-trend_volume_D000,sd_volume_D000,trend_volume_percent_D000,sig_volume_D000 = compute_trend(nyears_D000,volume_mon_D000[month,:])
-trend_volume_piomas,sd_volume_piomas,trend_volume_percent_piomas,sig_volume_piomas = compute_trend(nyears_piomas,volume_piomas_mon[month,:])
-print('Trend in March sea-ice volume (10^3 km^3/decade)')
-print('hist =',trend_volume,'(',sig_volume,')')
-print('CTRL =',trend_volume_D000,'(',sig_volume_D000,')')
-print('PIOMAS =',trend_volume_piomas,'(',sig_volume_piomas,')')
-
-# Compute trend in September sea-ice volume
-month = 8
-trend_volume,sd_volume,trend_volume_percent,sig_volume = compute_trend(nyears,volume_mon[month,:])
-trend_volume_D000,sd_volume_D000,trend_volume_percent_D000,sig_volume_D000 = compute_trend(nyears_D000,volume_mon_D000[month,:])
-trend_volume_piomas,sd_volume_piomas,trend_volume_percent_piomas,sig_volume_piomas = compute_trend(nyears_piomas,volume_piomas_mon[month,:])
-print('Trend in September sea-ice volume (10^3 km^3/decade)')
-print('hist =',trend_volume,'(',sig_volume,')')
-print('CTRL =',trend_volume_D000,'(',sig_volume_D000,')')
-print('PIOMAS =',trend_volume_piomas,'(',sig_volume_piomas,')')
-
 # Labels
 #name_xticks = ['1960','1980','2000','2020','2040','2060','2080','2100','2120','2140','2160','2180','2200','2220']
 name_xticks = ['','','','','','','','','','','','','','','-30','-20','-10','0','10','20','30','40','50','60','70','80','90','100']
@@ -642,55 +593,6 @@ ax[1].set_title('b',loc='left',fontsize=25,fontweight='bold')
 if save_fig == True:
     fig.savefig(dir_fig + 'fig5.png')
     fig.savefig(dir_fig + 'fig5.eps',dpi=300)
-
-
-# Supp. Fig. 5b - Time series of total Arctic sea-ice volume
-fig,ax = plt.subplots(2,1,figsize=(18,12))
-fig.subplots_adjust(left=0.08,bottom=0.09,right=0.95,top=0.95,wspace=None,hspace=0.2)
-
-# March volume
-#ax[0].plot(np.arange(nyears) + 1,volume_mon[2,:],'-',color='red',label='CMIP6 historical')
-ax[0].plot(np.arange(nyears_D012) + 1 + 180,volume_mon_D012[2,:],'--',color='red',label='ATL1+3$^\circ$C',linewidth=2)
-ax[0].plot(np.arange(nyears_D013) + 1 + 180,volume_mon_D015[2,:],'--',color='blue',label='ATL2+3$^\circ$C',linewidth=2)
-ax[0].plot(np.arange(nyears_D013) + 1 + 180,volume_mon_D018[2,:],'--',color='green',label='ATL3+3$^\circ$C',linewidth=2)
-ax[0].plot(np.arange(nyears_D000) + 1 + 64,volume_mon_D000[2,:],'-',color='blue',label='CTRL',linewidth=2)
-ax[0].plot(np.arange(nyears_D012) + 1 + 180,volume_mon_D021[2,:],'--',color='cyan',label='PAC1+3$^\circ$C',linewidth=2)
-ax[0].plot(np.arange(nyears_D013) + 1 + 180,volume_mon_D022[2,:],'--',color='orange',label='PAC2+3$^\circ$C',linewidth=2)
-ax[0].plot(np.arange(nyears_D013) + 1 + 180,volume_mon_D023[2,:],'--',color='gray',label='PAC3+3$^\circ$C',linewidth=2)
-#ax[0].plot(np.arange(nyears_piomas) + 1 + 29,volume_piomas_mon[2,:],'-',color='black',label='Reanalysis',linewidth=2)
-ax[0].legend(loc='upper left',shadow=True,frameon=False,fontsize=18,ncol=2)
-ax[0].set_ylabel('March sea-ice volume (10$^3$ km$^3$)',fontsize=22)
-ax[0].set_xticks(xrangea)
-ax[0].set_xticklabels(name_xticks)
-ax[0].set_yticks(np.arange(10, 35.1, 5))
-ax[0].tick_params(axis='both',labelsize=20)
-ax[0].axis([150, 281, 10, 35])
-ax[0].grid(linestyle='--')
-ax[0].set_title('a',loc='left',fontsize=25,fontweight='bold')
-
-# September volume
-#ax[1].plot(np.arange(nyears) + 1,volume_mon[8,:],'-',color='red',label='CMIP6 historical')
-ax[1].plot(np.arange(nyears_D012) + 1 + 180,volume_mon_D012[8,:],'--',color='red',label='ATL1+3$^\circ$C',linewidth=2)
-ax[1].plot(np.arange(nyears_D013) + 1 + 180,volume_mon_D015[8,:],'--',color='blue',label='ATL2+3$^\circ$C',linewidth=2)
-ax[1].plot(np.arange(nyears_D013) + 1 + 180,volume_mon_D018[8,:],'--',color='green',label='ATL3+3$^\circ$C',linewidth=2)
-ax[1].plot(np.arange(nyears_D000) + 1 + 64,volume_mon_D000[8,:],'-',color='blue',label='CTRL',linewidth=2)
-ax[1].plot(np.arange(nyears_D012) + 1 + 180,volume_mon_D021[8,:],'--',color='cyan',label='PAC1+3$^\circ$C',linewidth=2)
-ax[1].plot(np.arange(nyears_D013) + 1 + 180,volume_mon_D022[8,:],'--',color='orange',label='PAC2+3$^\circ$C',linewidth=2)
-ax[1].plot(np.arange(nyears_D013) + 1 + 180,volume_mon_D023[8,:],'--',color='gray',label='PAC3+3$^\circ$C',linewidth=2)
-#ax[1].plot(np.arange(nyears_piomas) + 1 + 29,volume_piomas_mon[8,:],'-',color='black',label='Reanalysis',linewidth=2)
-ax[1].legend(loc='upper left',shadow=True,frameon=False,fontsize=18,ncol=2)
-ax[1].set_xlabel('Year',fontsize=20)
-ax[1].set_ylabel('September sea-ice volume (10$^3$ km$^3$)',fontsize=22)
-ax[1].set_xticks(xrangea)
-ax[1].set_xticklabels(name_xticks)
-ax[1].set_yticks(np.arange(0, 25.1, 5))
-ax[1].tick_params(axis='both',labelsize=20)
-ax[1].axis([150, 281, 0, 25])
-ax[1].grid(linestyle='--')
-ax[1].set_title('b',loc='left',fontsize=25,fontweight='bold')
-
-#if save_fig == True:
-#    fig.savefig(dir_fig + 'fig5b.png')
     
 
 # Fig. 6 - Seasonal cycles of total Arctic sea-ice area and volume
@@ -765,149 +667,3 @@ ax[1,1].set_title('d',loc='left',fontsize=32,fontweight='bold')
 if save_fig == True:
     fig.savefig(dir_fig + 'fig6.png')
     fig.savefig(dir_fig + 'fig6.eps',dpi=300)
-
-
-# Fig. Supp. 6a (SST+1K) - Seasonal cycles of total Arctic sea-ice area and volume
-fig,ax = plt.subplots(2,2,figsize=(24,18))
-fig.subplots_adjust(left=0.08,bottom=0.1,right=0.95,top=0.95,wspace=0.15,hspace=0.3)    
-
-# SIA Atlantic SST experiments
-ax[0,0].set_title('Atlantic SST+1$^\circ$C experiments',fontsize=32)
-ax[0,0].plot(np.arange(nmy) + 1,area_ym_D000,'o-',color='blue',linewidth=2,label='CTRL')
-ax[0,0].plot(np.arange(nmy) + 1,area_ym_D013,'.--',color='purple',linewidth=2,label='ATL1+1$^\circ$C ('+str(np.round(area_ym_D013[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D013[8]-area_ym_D000[8],2))+')')
-ax[0,0].plot(np.arange(nmy) + 1,area_ym_D016,'.--',color='red',linewidth=2,label='ATL2+1$^\circ$C ('+str(np.round(area_ym_D016[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D016[8]-area_ym_D000[8],2))+')')
-ax[0,0].plot(np.arange(nmy) + 1,area_ym_D019,'.--',color='lightcoral',linewidth=2,label='ATL3+1$^\circ$C ('+str(np.round(area_ym_D019[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D019[8]-area_ym_D000[8],2))+')')
-ax[0,0].legend(loc='lower left',shadow=True,frameon=False,fontsize=22)
-ax[0,0].set_ylabel('Arctic sea-ice area (10$^6$ km$^2$)',fontsize=30)
-ax[0,0].set_xticks(np.arange(nmy)+1)
-ax[0,0].set_xticklabels(name_xticks2)
-ax[0,0].set_yticks(np.arange(0, 14.1, 2))
-ax[0,0].tick_params(axis='both',labelsize=26)
-ax[0,0].axis([0, 13, 0, 14])
-ax[0,0].grid(linestyle='--')
-ax[0,0].set_title('a',loc='left',fontsize=32,fontweight='bold')
-
-# SIA Pacific SST experiments
-ax[0,1].set_title('Pacific SST+1$^\circ$C experiments',fontsize=32)
-ax[0,1].plot(np.arange(nmy) + 1,area_ym_D000,'o-',color='blue',linewidth=2,label='CTRL')
-ax[0,1].plot(np.arange(nmy) + 1,area_ym_D027,'.--',color='purple',linewidth=2,label='PAC1+1$^\circ$C ('+str(np.round(area_ym_D027[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D027[8]-area_ym_D000[8],2))+')')
-ax[0,1].plot(np.arange(nmy) + 1,area_ym_D029,'.--',color='red',linewidth=2,label='PAC2+1$^\circ$C ('+str(np.round(area_ym_D029[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D029[8]-area_ym_D000[8],2))+')')
-ax[0,1].plot(np.arange(nmy) + 1,area_ym_D024,'.--',color='lightcoral',linewidth=2,label='PAC3+1$^\circ$C ('+str(np.round(area_ym_D024[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D024[8]-area_ym_D000[8],2))+')')
-ax[0,1].legend(loc='lower left',shadow=True,frameon=False,fontsize=22)
-ax[0,1].set_xticks(np.arange(nmy)+1)
-ax[0,1].set_xticklabels(name_xticks2)
-ax[0,1].set_yticks(np.arange(0, 14.1, 2))
-ax[0,1].tick_params(axis='both',labelsize=26)
-ax[0,1].axis([0, 13, 0, 14])
-ax[0,1].grid(linestyle='--')
-ax[0,1].set_title('b',loc='left',fontsize=32,fontweight='bold')
-
-# SIV Atlantic SST experiments
-ax[1,0].set_title('Atlantic SST+1$^\circ$C experiments',fontsize=32)
-ax[1,0].plot(np.arange(nmy) + 1,volume_ym_D000,'o-',color='blue',linewidth=2,label='CTRL')
-ax[1,0].plot(np.arange(nmy) + 1,volume_ym_D013,'.--',color='purple',linewidth=2,label='ATL1+1$^\circ$C ('+str(np.round(volume_ym_D013[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D013[8]-volume_ym_D000[8],2))+')')
-ax[1,0].plot(np.arange(nmy) + 1,volume_ym_D016,'.--',color='red',linewidth=2,label='ATL2+1$^\circ$C ('+str(np.round(volume_ym_D016[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D016[8]-volume_ym_D000[8],2))+')')
-ax[1,0].plot(np.arange(nmy) + 1,volume_ym_D019,'.--',color='lightcoral',linewidth=2,label='ATL3+1$^\circ$C ('+str(np.round(volume_ym_D019[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D019[8]-volume_ym_D000[8],2))+')')
-ax[1,0].legend(loc='upper right',shadow=True,frameon=False,fontsize=22)
-ax[1,0].set_ylabel('Arctic sea-ice volume (10$^3$ km$^3$)',fontsize=30)
-ax[1,0].set_xlabel('Month',fontsize=30)
-ax[1,0].set_xticks(np.arange(nmy)+1)
-ax[1,0].set_xticklabels(name_xticks2)
-ax[1,0].set_yticks(np.arange(0, 30.1, 5))
-ax[1,0].tick_params(axis='both',labelsize=26)
-ax[1,0].axis([0, 13, 0, 30])
-ax[1,0].grid(linestyle='--')
-ax[1,0].set_title('c',loc='left',fontsize=32,fontweight='bold')
-
-# SIV Pacific SST experiments
-ax[1,1].set_title('Pacific SST+1$^\circ$C experiments',fontsize=32)
-ax[1,1].plot(np.arange(nmy) + 1,volume_ym_D000,'o-',color='blue',linewidth=2,label='CTRL')
-ax[1,1].plot(np.arange(nmy) + 1,volume_ym_D027,'.--',color='purple',linewidth=2,label='PAC1+1$^\circ$C ('+str(np.round(volume_ym_D027[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D027[8]-volume_ym_D000[8],2))+')')
-ax[1,1].plot(np.arange(nmy) + 1,volume_ym_D029,'.--',color='red',linewidth=2,label='PAC2+1$^\circ$C ('+str(np.round(volume_ym_D029[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D029[8]-volume_ym_D000[8],2))+')')
-ax[1,1].plot(np.arange(nmy) + 1,volume_ym_D024,'.--',color='lightcoral',linewidth=2,label='PAC3+1$^\circ$C ('+str(np.round(volume_ym_D024[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D024[8]-volume_ym_D000[8],2))+')')
-ax[1,1].legend(loc='upper right',shadow=True,frameon=False,fontsize=22)
-ax[1,1].set_xlabel('Month',fontsize=28)
-ax[1,1].set_xticks(np.arange(nmy)+1)
-ax[1,1].set_xticklabels(name_xticks2)
-ax[1,1].set_yticks(np.arange(0, 30.1, 5))
-ax[1,1].tick_params(axis='both',labelsize=26)
-ax[1,1].axis([0, 13, 0, 30])
-ax[1,1].grid(linestyle='--')
-ax[1,1].set_title('d',loc='left',fontsize=32,fontweight='bold')
-
-# Save figure
-if save_fig == True:
-    fig.savefig(dir_fig + 'fig6a.png')
-
-
-# Fig. Supp. 6b (SST+5K) - Seasonal cycles of total Arctic sea-ice area and volume
-fig,ax = plt.subplots(2,2,figsize=(24,18))
-fig.subplots_adjust(left=0.08,bottom=0.1,right=0.95,top=0.95,wspace=0.15,hspace=0.3)    
-
-# SIA Atlantic SST experiments
-ax[0,0].set_title('Atlantic SST+5$^\circ$C experiments',fontsize=32)
-ax[0,0].plot(np.arange(nmy) + 1,area_ym_D000,'o-',color='blue',linewidth=2,label='CTRL')
-ax[0,0].plot(np.arange(nmy) + 1,area_ym_D014,'.--',color='purple',linewidth=2,label='ATL1+5$^\circ$C ('+str(np.round(area_ym_D014[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D014[8]-area_ym_D000[8],2))+')')
-ax[0,0].plot(np.arange(nmy) + 1,area_ym_D017,'.--',color='red',linewidth=2,label='ATL2+5$^\circ$C ('+str(np.round(area_ym_D017[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D017[8]-area_ym_D000[8],2))+')')
-ax[0,0].plot(np.arange(nmy) + 1,area_ym_D020,'.--',color='lightcoral',linewidth=2,label='ATL3+5$^\circ$C ('+str(np.round(area_ym_D020[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D020[8]-area_ym_D000[8],2))+')')
-ax[0,0].legend(loc='lower left',shadow=True,frameon=False,fontsize=22)
-ax[0,0].set_ylabel('Arctic sea-ice area (10$^6$ km$^2$)',fontsize=30)
-ax[0,0].set_xticks(np.arange(nmy)+1)
-ax[0,0].set_xticklabels(name_xticks2)
-ax[0,0].set_yticks(np.arange(0, 14.1, 2))
-ax[0,0].tick_params(axis='both',labelsize=26)
-ax[0,0].axis([0, 13, 0, 14])
-ax[0,0].grid(linestyle='--')
-ax[0,0].set_title('a',loc='left',fontsize=32,fontweight='bold')
-
-# SIA Pacific SST experiments
-ax[0,1].set_title('Pacific SST+5$^\circ$C experiments',fontsize=32)
-ax[0,1].plot(np.arange(nmy) + 1,area_ym_D000,'o-',color='blue',linewidth=2,label='CTRL')
-ax[0,1].plot(np.arange(nmy) + 1,area_ym_D028,'.--',color='purple',linewidth=2,label='PAC1+5$^\circ$C ('+str(np.round(area_ym_D028[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D028[8]-area_ym_D000[8],2))+')')
-ax[0,1].plot(np.arange(nmy) + 1,area_ym_D030,'.--',color='red',linewidth=2,label='PAC2+5$^\circ$C ('+str(np.round(area_ym_D030[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D030[8]-area_ym_D000[8],2))+')')
-ax[0,1].plot(np.arange(nmy) + 1,area_ym_D025,'.--',color='lightcoral',linewidth=2,label='PAC3+5$^\circ$C ('+str(np.round(area_ym_D025[2]-area_ym_D000[2],2))+'; '+str(np.round(area_ym_D025[8]-area_ym_D000[8],2))+')')
-ax[0,1].legend(loc='lower left',shadow=True,frameon=False,fontsize=22)
-ax[0,1].set_xticks(np.arange(nmy)+1)
-ax[0,1].set_xticklabels(name_xticks2)
-ax[0,1].set_yticks(np.arange(0, 14.1, 2))
-ax[0,1].tick_params(axis='both',labelsize=26)
-ax[0,1].axis([0, 13, 0, 14])
-ax[0,1].grid(linestyle='--')
-ax[0,1].set_title('b',loc='left',fontsize=32,fontweight='bold')
-
-# SIV Atlantic SST experiments
-ax[1,0].set_title('Atlantic SST+5$^\circ$C experiments',fontsize=32)
-ax[1,0].plot(np.arange(nmy) + 1,volume_ym_D000,'o-',color='blue',linewidth=2,label='CTRL')
-ax[1,0].plot(np.arange(nmy) + 1,volume_ym_D014,'.--',color='purple',linewidth=2,label='ATL1+5$^\circ$C ('+str(np.round(volume_ym_D014[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D014[8]-volume_ym_D000[8],2))+')')
-ax[1,0].plot(np.arange(nmy) + 1,volume_ym_D017,'.--',color='red',linewidth=2,label='ATL2+5$^\circ$C ('+str(np.round(volume_ym_D017[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D017[8]-volume_ym_D000[8],2))+')')
-ax[1,0].plot(np.arange(nmy) + 1,volume_ym_D020,'.--',color='lightcoral',linewidth=2,label='ATL3+5$^\circ$C ('+str(np.round(volume_ym_D020[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D020[8]-volume_ym_D000[8],2))+')')
-ax[1,0].legend(loc='upper right',shadow=True,frameon=False,fontsize=22)
-ax[1,0].set_ylabel('Arctic sea-ice volume (10$^3$ km$^3$)',fontsize=30)
-ax[1,0].set_xlabel('Month',fontsize=30)
-ax[1,0].set_xticks(np.arange(nmy)+1)
-ax[1,0].set_xticklabels(name_xticks2)
-ax[1,0].set_yticks(np.arange(0, 30.1, 5))
-ax[1,0].tick_params(axis='both',labelsize=26)
-ax[1,0].axis([0, 13, 0, 30])
-ax[1,0].grid(linestyle='--')
-ax[1,0].set_title('c',loc='left',fontsize=32,fontweight='bold')
-
-# SIV Pacific SST experiments
-ax[1,1].set_title('Pacific SST+5$^\circ$C experiments',fontsize=32)
-ax[1,1].plot(np.arange(nmy) + 1,volume_ym_D000,'o-',color='blue',linewidth=2,label='CTRL')
-ax[1,1].plot(np.arange(nmy) + 1,volume_ym_D028,'.--',color='purple',linewidth=2,label='PAC1+5$^\circ$C ('+str(np.round(volume_ym_D028[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D028[8]-volume_ym_D000[8],2))+')')
-ax[1,1].plot(np.arange(nmy) + 1,volume_ym_D030,'.--',color='red',linewidth=2,label='PAC2+5$^\circ$C ('+str(np.round(volume_ym_D030[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D030[8]-volume_ym_D000[8],2))+')')
-ax[1,1].plot(np.arange(nmy) + 1,volume_ym_D025,'.--',color='lightcoral',linewidth=2,label='PAC3+5$^\circ$C ('+str(np.round(volume_ym_D025[2]-volume_ym_D000[2],2))+'; '+str(np.round(volume_ym_D025[8]-volume_ym_D000[8],2))+')')
-ax[1,1].legend(loc='upper right',shadow=True,frameon=False,fontsize=22)
-ax[1,1].set_xlabel('Month',fontsize=28)
-ax[1,1].set_xticks(np.arange(nmy)+1)
-ax[1,1].set_xticklabels(name_xticks2)
-ax[1,1].set_yticks(np.arange(0, 30.1, 5))
-ax[1,1].tick_params(axis='both',labelsize=26)
-ax[1,1].axis([0, 13, 0, 30])
-ax[1,1].grid(linestyle='--')
-ax[1,1].set_title('d',loc='left',fontsize=32,fontweight='bold')
-
-# Save figure
-#if save_fig == True:
-#    fig.savefig(dir_fig + 'fig6b.png')
