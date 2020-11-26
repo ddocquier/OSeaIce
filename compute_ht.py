@@ -6,13 +6,12 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    28/10/2020
+    19/11/2020
 '''
 
 # Options
-exp = 'D000'
+exp = 'D023'
 save_var = True
-save_fig = False
 
 # Standard libraries
 from netCDF4 import Dataset
@@ -32,20 +31,35 @@ def inferred_heat_transport(energy_in,lat_deg):
     ht = ht / 1.e15 # Convert from W to PW
     return ht
 
-# Load top net solar (shortwave) radiation (positive downwards)
+# Load top net solar (shortwave) radiation (J/m^2, positive downwards)
 filename = dir_input + 'tsr_'+str(exp)+'_2130.nc'
 fh = Dataset(filename, mode='r')
 tsr = fh.variables['var178'][:]
-tsr[tsr>1.e10] = np.nan
 lat = fh.variables['lat'][:]
 fh.close()
 nm,ny,nx = tsr.shape
 
-# Load top net thermal (longwave) radiation (positive downwards)
+# Load top net thermal (longwave) radiation (J/m^2, positive downwards)
 filename = dir_input + 'ttr_'+str(exp)+'_2130.nc'
 fh = Dataset(filename, mode='r')
 ttr = fh.variables['var179'][:]
-ttr[ttr>1.e10] = np.nan
+fh.close()
+
+# Load restoring flux (W/m^2)
+if exp != 'D000':
+    filename = dir_input + 'hfcorr_ifs_'+str(exp)+'_2130-2179.nc'
+    fh = Dataset(filename, mode='r')
+    hfcorr = fh.variables['hfcorr'][:]
+    hfcorr[hfcorr>1.e10] = 0.
+    hfcorr[hfcorr<-1.e10] = 0.
+    fh.close()
+
+# Load surface ocean heat flux (W/m^2)
+filename = dir_input + 'qtoce_ifs_'+str(exp)+'_2130.nc'
+fh = Dataset(filename, mode='r')
+ohfl = fh.variables['qt_oce'][:]
+ohfl[ohfl>1.e10] = 0.
+ohfl[ohfl<-1.e10] = 0.
 fh.close()
 
 # Convert radiations from J/m^2 to W/m^2
@@ -56,21 +70,37 @@ else: # Output every 12h
     tsr = tsr / (12*3600)
     ttr = ttr / (12*3600)
 
-# Zonal mean of solar and thermal radiations
+# Zonal means
 tsr_mean = np.nanmean(tsr,axis=2)
 ttr_mean = np.nanmean(ttr,axis=2)
+ohfl_mean = np.nanmean(ohfl,axis=2)
+if exp != 'D000':
+    hfcorr_mean = np.nanmean(hfcorr,axis=2)
+    ohfl_mean = ohfl_mean + hfcorr_mean
 
 # Compute top net downward radiation (sum of solar and thermal radiation, if both positive downwards)
 Rt = tsr_mean + ttr_mean
 
+# Compute surface net heat flux into the atmosphere
+if exp != 'D000':
+    Fatmin = Rt - (ohfl_mean - hfcorr_mean)
+else:
+    Fatmin = Rt - ohfl_mean
+
 # Compute total, atmospheric and ocean heat transports from South Pole
 lat = np.flip(lat)
 Rt = np.flip(Rt,1)
+Fatmin = np.flip(Fatmin,1)
+ohfl_mean = np.flip(ohfl_mean,1)
 ht_total = np.zeros((nm,ny))
+aht = np.zeros((nm,ny))
+oht = np.zeros((nm,ny))
 for t in np.arange(nm):
     ht_total[t,:] = inferred_heat_transport(Rt[t,:],lat)
+    aht[t,:] = inferred_heat_transport(Fatmin[t,:],lat)
+    oht[t,:] = inferred_heat_transport(ohfl_mean[t,:],lat)
 
 # Save variables
 if save_var == True:
     filename = dir_output + 'ht_' + str(exp) + '.npy'
-    np.save(filename,[ht_total,lat])
+    np.save(filename,[ht_total,aht,oht,lat])

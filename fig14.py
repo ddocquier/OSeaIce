@@ -7,14 +7,13 @@ GOAL
 PROGRAMMER
     D. Docquier
 LAST UPDATE
-    28/10/2020
+    19/11/2020
 '''
 
 # Standard libraries
 import numpy as np
 import matplotlib.pyplot as plt
 from netCDF4 import Dataset
-from scipy.interpolate import griddata
 
 # Option
 save_fig = True
@@ -33,33 +32,33 @@ dir_output = '/nobackup/rossby24/proj/rossby/joint_exp/oseaice/OSeaIce_Paper/'
 
 # Load total HT D000
 filename = dir_D000 + 'ht_D000.npy'
-ht_D000,notused = np.load(filename,allow_pickle=True)
+ht_D000,aht_D000,oht_D000b,notused = np.load(filename,allow_pickle=True)
 
 # Load total HT D012
 filename = dir_D012 + 'ht_D012.npy'
-ht_D012,lat_ifs = np.load(filename,allow_pickle=True)
+ht_D012,aht_D012,oht_D012b,lat_ifs = np.load(filename,allow_pickle=True)
 lat_ifs = np.array(lat_ifs)
 nm,ny = ht_D012.shape
 
 # Load total HT D015
 filename = dir_D015 + 'ht_D015.npy'
-ht_D015,notused = np.load(filename,allow_pickle=True)
+ht_D015,aht_D015,oht_D015b,notused = np.load(filename,allow_pickle=True)
 
 # Load total HT D018
 filename = dir_D018 + 'ht_D018.npy'
-ht_D018,notused = np.load(filename,allow_pickle=True)
+ht_D018,aht_D018,oht_D018b,notused = np.load(filename,allow_pickle=True)
 
 # Load total HT D021
 filename = dir_D021 + 'ht_D021.npy'
-ht_D021,notused = np.load(filename,allow_pickle=True)
+ht_D021,aht_D021,oht_D021b,notused = np.load(filename,allow_pickle=True)
 
 # Load total HT D022
 filename = dir_D022 + 'ht_D022.npy'
-ht_D022,notused = np.load(filename,allow_pickle=True)
+ht_D022,aht_D022,oht_D022b,notused = np.load(filename,allow_pickle=True)
 
 # Load total HT D023
 filename = dir_D023 + 'ht_D023.npy'
-ht_D023,notused = np.load(filename,allow_pickle=True)
+ht_D023,aht_D023,oht_D023b,notused = np.load(filename,allow_pickle=True)
 
 # Load OHT D000
 filename = dir_D001 + 'OHT_D001_2130-2179.nc'
@@ -104,32 +103,6 @@ fh = Dataset(filename, mode='r')
 oht_D023 = fh.variables['sopht_vt'][:,:,260]
 fh.close()
 
-# Interpolate OHT onto IFS grid (latitude)
-oht_ifs_D000 = np.zeros((nm,ny))
-oht_ifs_D012 = np.zeros((nm,ny))
-oht_ifs_D015 = np.zeros((nm,ny))
-oht_ifs_D018 = np.zeros((nm,ny))
-oht_ifs_D021 = np.zeros((nm,ny))
-oht_ifs_D022 = np.zeros((nm,ny))
-oht_ifs_D023 = np.zeros((nm,ny))
-for i in np.arange(nm):
-    oht_ifs_D000[i,:] = griddata(lat,oht_D000[i,:],lat_ifs)
-    oht_ifs_D012[i,:] = griddata(lat,oht_D012[i,:],lat_ifs)
-    oht_ifs_D015[i,:] = griddata(lat,oht_D015[i,:],lat_ifs)
-    oht_ifs_D018[i,:] = griddata(lat,oht_D018[i,:],lat_ifs)
-    oht_ifs_D021[i,:] = griddata(lat,oht_D021[i,:],lat_ifs)
-    oht_ifs_D022[i,:] = griddata(lat,oht_D022[i,:],lat_ifs)
-    oht_ifs_D023[i,:] = griddata(lat,oht_D023[i,:],lat_ifs)
-
-# Compute AHT
-aht_D000 = ht_D000 - oht_ifs_D000 
-aht_D012 = ht_D012 - oht_ifs_D012
-aht_D015 = ht_D015 - oht_ifs_D015
-aht_D018 = ht_D018 - oht_ifs_D018
-aht_D021 = ht_D021 - oht_ifs_D021
-aht_D022 = ht_D022 - oht_ifs_D022
-aht_D023 = ht_D023 - oht_ifs_D023
-
 # Compute mean total HT 50 years
 start = 0
 ht_mean_D000 = np.nanmean(ht_D000[start::,:],axis=0)
@@ -148,15 +121,6 @@ oht_mean_D018 = np.nanmean(oht_D018[start::,:],axis=0)
 oht_mean_D021 = np.nanmean(oht_D021[start::,:],axis=0)
 oht_mean_D022 = np.nanmean(oht_D022[start::,:],axis=0)
 oht_mean_D023 = np.nanmean(oht_D023[start::,:],axis=0)
-
-# Compute mean OHT on IFS grid 50 years
-oht_mean_ifs_D000 = np.nanmean(oht_ifs_D000[start::,:],axis=0)
-oht_mean_ifs_D012 = np.nanmean(oht_ifs_D012[start::,:],axis=0)
-oht_mean_ifs_D015 = np.nanmean(oht_ifs_D015[start::,:],axis=0)
-oht_mean_ifs_D018 = np.nanmean(oht_ifs_D018[start::,:],axis=0)
-oht_mean_ifs_D021 = np.nanmean(oht_ifs_D021[start::,:],axis=0)
-oht_mean_ifs_D022 = np.nanmean(oht_ifs_D022[start::,:],axis=0)
-oht_mean_ifs_D023 = np.nanmean(oht_ifs_D023[start::,:],axis=0)
 
 # Compute mean AHT 50 years
 aht_mean_D000 = np.nanmean(aht_D000[start::,:],axis=0)
